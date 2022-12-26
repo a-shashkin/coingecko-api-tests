@@ -10,7 +10,7 @@ import java.util.Properties;
 
 import static io.restassured.RestAssured.given;
 
-public class SimpleGroupTests extends TestBase {
+public class PostsTests extends TestBase {
 
     Properties properties = new Properties();
     FileInputStream file;
@@ -25,7 +25,7 @@ public class SimpleGroupTests extends TestBase {
     }
 
     @Test
-    void supportedVsCurrenciesTest() throws IOException {
+    void getAllPostsTest() throws IOException {
 
         properties.load(file);
 
@@ -34,8 +34,7 @@ public class SimpleGroupTests extends TestBase {
                         log().all().
                         header("user-agent", " Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) " +
                                 "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6.1 Safari/605.1.15").
-                        header("x-rapidapi-key", properties.getProperty("xRapidapiKey")).
-                        get("/simple/supported_vs_currencies").
+                        get("/posts").
                 then().
                         log().all().
                         statusCode(200).
