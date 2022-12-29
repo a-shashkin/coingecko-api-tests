@@ -1,5 +1,6 @@
 package com.simbirsoft.tests;
 
+import com.simbirsoft.lombok.LombokPostsGetRequests;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
+import static com.simbirsoft.specs.Specs.requestSpecification;
+import static com.simbirsoft.specs.Specs.responseSpecification;
 
 public class PostsTests extends TestBase {
 
@@ -40,5 +43,19 @@ public class PostsTests extends TestBase {
                         statusCode(200).
                         extract().response();
 
+    }
+
+    @Test
+    void lombokGetAllPostsTest() {
+
+        LombokPostsGetRequests[] postsGetRequestsData =
+                given().
+                        spec(requestSpecification).
+                when().
+                        get("/posts").
+                then().
+                        spec(responseSpecification).
+                        log().all().
+                        extract().as(LombokPostsGetRequests[].class);
     }
 }
