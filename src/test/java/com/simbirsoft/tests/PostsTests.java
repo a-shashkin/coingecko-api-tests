@@ -1,18 +1,21 @@
 package com.simbirsoft.tests;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import com.simbirsoft.lombok.LombokPostsData;
-import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 import static io.restassured.RestAssured.*;
 import static com.simbirsoft.specs.Specs.requestSpecification;
 import static com.simbirsoft.specs.Specs.responseSpecification;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PostsTests extends TestBase {
 
@@ -29,46 +32,7 @@ public class PostsTests extends TestBase {
     }
 
     @Test
-    void getAllPostsTest() throws IOException {
-
-        properties.load(file);
-
-        Response response =
-                given().
-                        log().all().
-                        header("user-agent", " Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) " +
-                                "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6.1 Safari/605.1.15").
-                        get("/posts").
-                then().
-                        log().all().
-                        statusCode(200).
-                        extract().response();
-
-    }
-
-    @Test
-    void getSpecificUserTest() throws IOException {
-
-        properties.load(file);
-
-        Response response =
-                given().
-                        log().all().
-                        header("user-agent", " Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) " +
-                                "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6.1 Safari/605.1.15").
-                        get("/posts/2").
-                        then().
-                        log().all().
-                        statusCode(200).
-                        extract().response();
-
-        Integer id = response.path("id");
-
-        assertEquals(2, id);
-    }
-
-    @Test
-    void lombokGetAllPostsTest() {
+    void getAllPostsTest() {
 
         LombokPostsData[] postsGetRequestsData =
                 given().
@@ -80,21 +44,32 @@ public class PostsTests extends TestBase {
                         log().body().
                         extract().as(LombokPostsData[].class);
 
+        assertNotNull(postsGetRequestsData);
     }
 
     @Test
-    void lombokGetSpecificPostTest() {
+    void getSpecificPostTest() {
+
+        Gson gson = new Gson();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classLoader.getResourceAsStream("testData/expectedResults/getPostExpectedResult.json");
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
+        jsonReader.setLenient(true);
+        LombokPostsData expectedData = gson.fromJson(jsonReader, LombokPostsData.class);
 
         LombokPostsData postsGetRequestsData =
                 given().
                         spec(requestSpecification).
                 when().
-                        get("/posts/2").
+                        get("/posts/" + expectedData.getId()).
                 then().
                         spec(responseSpecification).
                         log().all().
                         extract().as(LombokPostsData.class);
 
-        assertEquals(2, postsGetRequestsData.getId());
+        assertEquals(expectedData.getId(), postsGetRequestsData.getId());
+        assertEquals(expectedData.getUserId(), postsGetRequestsData.getUserId());
+        assertEquals(expectedData.getTitle(), postsGetRequestsData.getTitle());
+        assertEquals(expectedData.getBody(), postsGetRequestsData.getBody());
     }
 }
