@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Properties;
 
+import static com.simbirsoft.specs.PostRequestSpecs.postRequestSpecification;
+import static com.simbirsoft.specs.PostRequestSpecs.postResponseSpecification;
 import static io.restassured.RestAssured.*;
 import static com.simbirsoft.specs.Specs.requestSpecification;
 import static com.simbirsoft.specs.Specs.responseSpecification;
@@ -97,5 +99,82 @@ public class PostsTests extends TestBase {
         assertThat(Arrays.asList(commentsGetRequestsData)).
                 extracting(LombokCommentsData::getPostId).
                 contains(expectedData.getPostId());
+        assertThat(Arrays.asList(commentsGetRequestsData)).
+                extracting(LombokCommentsData::getId).
+                isNotNull();
+        assertThat(Arrays.asList(commentsGetRequestsData)).
+                extracting(LombokCommentsData::getBody).
+                isNotNull();
+        assertThat(Arrays.asList(commentsGetRequestsData)).
+                extracting(LombokCommentsData::getName).
+                isNotNull();
+        assertThat(Arrays.asList(commentsGetRequestsData)).
+                extracting(LombokCommentsData::getEmail).
+                isNotNull();
+    }
+
+    @Test
+    void getCommentsForPostViaCommentsPostIdRequest() {
+
+        Gson gson = new Gson();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classLoader.getResourceAsStream("testData/expectedResults/getCommentExpectedResult.json");
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
+        jsonReader.setLenient(true);
+        LombokCommentsData expectedData = gson.fromJson(jsonReader, LombokCommentsData.class);
+
+        LombokCommentsData[] commentsGetRequestsData =
+                given().
+                        spec(requestSpecification).
+                        when().
+                        get("/comments?postId=" + expectedData.getPostId()).
+                        then().
+                        spec(responseSpecification).
+                        log().all().
+                        extract().as(LombokCommentsData[].class);
+
+        assertThat(Arrays.asList(commentsGetRequestsData)).
+                extracting(LombokCommentsData::getPostId).
+                contains(expectedData.getPostId());
+        assertThat(Arrays.asList(commentsGetRequestsData)).
+                extracting(LombokCommentsData::getId).
+                isNotNull();
+        assertThat(Arrays.asList(commentsGetRequestsData)).
+                extracting(LombokCommentsData::getBody).
+                isNotNull();
+        assertThat(Arrays.asList(commentsGetRequestsData)).
+                extracting(LombokCommentsData::getName).
+                isNotNull();
+        assertThat(Arrays.asList(commentsGetRequestsData)).
+                extracting(LombokCommentsData::getEmail).
+                isNotNull();
+    }
+
+    @Test
+    void createPostTest() {
+
+        Gson gson = new Gson();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/postsBody.json");
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
+        jsonReader.setLenient(true);
+        LombokPostsData sentData = gson.fromJson(jsonReader, LombokPostsData.class);
+
+        LombokPostsData responseData =
+                given().
+                        spec(postRequestSpecification).
+                        body(sentData).
+                        when().
+                        post("/posts").
+                        then().
+                        spec(postResponseSpecification).
+                        extract().as(LombokPostsData.class);
+
+        assertThat(Arrays.asList(responseData)).
+                extracting(LombokPostsData::getId).
+                isNotNull();
+        assertEquals(sentData.getUserId(), responseData.getUserId());
+        assertEquals(sentData.getTitle(), responseData.getTitle());
+        assertEquals(sentData.getBody(), responseData.getBody());
     }
 }
