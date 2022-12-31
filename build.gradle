@@ -28,6 +28,7 @@ dependencies {
             "com.fasterxml.jackson.core:jackson-databind:2.11.2",
             "io.rest-assured:json-schema-validator:4.4.0",
             'com.google.code.gson:gson:2.8.9',
+            'org.assertj:assertj-core:3.23.1',
             "io.qameta.allure:allure-rest-assured:$allureVersion",
             "org.assertj:assertj-core:3.21.0",
             "org.junit.jupiter:junit-jupiter-api:$junitVersion")

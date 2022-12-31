@@ -2,20 +2,21 @@ package com.simbirsoft.tests;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.simbirsoft.lombok.LombokCommentsData;
 import com.simbirsoft.lombok.LombokPostsData;
 import org.junit.jupiter.api.Test;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Properties;
 
 import static io.restassured.RestAssured.*;
 import static com.simbirsoft.specs.Specs.requestSpecification;
 import static com.simbirsoft.specs.Specs.responseSpecification;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PostsTests extends TestBase {
 
@@ -71,5 +72,30 @@ public class PostsTests extends TestBase {
         assertEquals(expectedData.getUserId(), postsGetRequestsData.getUserId());
         assertEquals(expectedData.getTitle(), postsGetRequestsData.getTitle());
         assertEquals(expectedData.getBody(), postsGetRequestsData.getBody());
+    }
+
+    @Test
+    void getCommentsForPostViaPostsRequest() {
+
+        Gson gson = new Gson();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classLoader.getResourceAsStream("testData/expectedResults/getCommentExpectedResult.json");
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
+        jsonReader.setLenient(true);
+        LombokCommentsData expectedData = gson.fromJson(jsonReader, LombokCommentsData.class);
+
+        LombokCommentsData[] commentsGetRequestsData =
+                given().
+                        spec(requestSpecification).
+                when().
+                        get("/posts/" + expectedData.getPostId() + "/comments").
+                then().
+                        spec(responseSpecification).
+                        log().all().
+                        extract().as(LombokCommentsData[].class);
+
+        assertThat(Arrays.asList(commentsGetRequestsData)).
+                extracting(LombokCommentsData::getPostId).
+                contains(expectedData.getPostId());
     }
 }
