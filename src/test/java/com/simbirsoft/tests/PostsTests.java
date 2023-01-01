@@ -1,18 +1,12 @@
 package com.simbirsoft.tests;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.simbirsoft.lombok.LombokCommentsData;
 import com.simbirsoft.lombok.LombokPostsData;
-import com.simbirsoft.specs.Specs;
 import org.junit.jupiter.api.Test;
-import sun.nio.cs.ext.JIS_X_0212_Solaris;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
@@ -26,18 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PostsTests extends TestBase {
-
-    Properties properties = new Properties();
-    FileInputStream file;
-    {
-        try
-        {
-            file = new FileInputStream("./src/test/resources/config/config.properties");
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Test
     void getAllPostsTest() {
@@ -60,7 +42,7 @@ public class PostsTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/expectedResults/getPostExpectedResult.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/expectedResults/postsRequests/getPostExpectedResult.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokPostsData expectedData = gson.fromJson(jsonReader, LombokPostsData.class);
@@ -86,7 +68,7 @@ public class PostsTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/expectedResults/getCommentExpectedResult.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/expectedResults/postsRequests/getCommentExpectedResult.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokCommentsData expectedData = gson.fromJson(jsonReader, LombokCommentsData.class);
@@ -123,7 +105,7 @@ public class PostsTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/expectedResults/getCommentExpectedResult.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/expectedResults/postsRequests/getCommentExpectedResult.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokCommentsData expectedData = gson.fromJson(jsonReader, LombokCommentsData.class);
@@ -160,7 +142,7 @@ public class PostsTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/postsPostBody.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/postsRequests/postsPostBody.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokPostsData sentData = gson.fromJson(jsonReader, LombokPostsData.class);
@@ -188,7 +170,7 @@ public class PostsTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/postsPutBody.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/postsRequests/postsPutBody.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokPostsData sentData = gson.fromJson(jsonReader, LombokPostsData.class);
@@ -214,12 +196,12 @@ public class PostsTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/postsPatchBody.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/postsRequests/postsPatchBody.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokPostsData sentData = gson.fromJson(jsonReader, LombokPostsData.class);
 
-        InputStream stream2 = classLoader.getResourceAsStream("testData/dataToSend/postsPatchBody.json");
+        InputStream stream2 = classLoader.getResourceAsStream("testData/dataToSend/postsRequests/postsPatchBody.json");
         JsonReader jsonReader2 = new JsonReader(new InputStreamReader(stream2));
         JsonObject sentDataObject = gson.fromJson(jsonReader2, JsonObject.class);
         Set<String> sentKeys = sentDataObject.keySet();
@@ -244,5 +226,25 @@ public class PostsTests extends TestBase {
         if (sentKeys.contains("body")) {
             assertEquals(responseData.getBody(), sentData.getBody());
         }
+    }
+
+    @Test
+    void deletePostRequest() {
+
+        Gson gson = new Gson();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/postsRequests/postsPatchBody.json");
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
+        jsonReader.setLenient(true);
+        LombokPostsData sentData = gson.fromJson(jsonReader, LombokPostsData.class);
+
+        LombokPostsData responseData =
+                given().
+                        spec(requestSpecification).
+                        when().
+                        delete("/posts/" + sentData.getId()).
+                        then().
+                        spec(responseSpecification).
+                        extract().as(LombokPostsData.class);
     }
 }
