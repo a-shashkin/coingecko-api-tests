@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.simbirsoft.lombok.LombokCommentsData;
 import com.simbirsoft.lombok.LombokPostsData;
+import com.simbirsoft.specs.Specs;
 import org.junit.jupiter.api.Test;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -155,7 +156,7 @@ public class PostsTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/postsBody.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/postsPostBody.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokPostsData sentData = gson.fromJson(jsonReader, LombokPostsData.class);
@@ -176,5 +177,42 @@ public class PostsTests extends TestBase {
         assertEquals(sentData.getUserId(), responseData.getUserId());
         assertEquals(sentData.getTitle(), responseData.getTitle());
         assertEquals(sentData.getBody(), responseData.getBody());
+    }
+
+    @Test
+    void editPostViaPutRequest() {
+
+        Gson gson = new Gson();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/postsPutBody.json");
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
+        jsonReader.setLenient(true);
+        LombokPostsData sentData = gson.fromJson(jsonReader, LombokPostsData.class);
+
+        LombokPostsData responseData =
+                given().
+                        spec(requestSpecification).
+                        body(sentData).
+                        when().
+                        put("/posts/" + sentData.getId()).
+                        then().
+                        spec(responseSpecification).
+                        extract().as(LombokPostsData.class);
+
+        assertEquals(responseData.getId(), sentData.getId());
+        assertEquals(responseData.getUserId(), sentData.getUserId());
+        assertEquals(responseData.getTitle(), sentData.getTitle());
+        assertEquals(responseData.getBody(), sentData.getBody());
+    }
+
+    @Test
+    void editPostViaPatchRequest() {
+
+        Gson gson = new Gson();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/postsPatchBody.json");
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
+        jsonReader.setLenient(true);
+        LombokPostsData sentData = gson.fromJson(jsonReader, LombokPostsData.class);
     }
 }
