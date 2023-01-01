@@ -1,17 +1,21 @@
 package com.simbirsoft.tests;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.simbirsoft.lombok.LombokCommentsData;
 import com.simbirsoft.lombok.LombokPostsData;
 import com.simbirsoft.specs.Specs;
 import org.junit.jupiter.api.Test;
+import sun.nio.cs.ext.JIS_X_0212_Solaris;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Properties;
+import java.util.*;
 
 import static com.simbirsoft.specs.PostRequestSpecs.postRequestSpecification;
 import static com.simbirsoft.specs.PostRequestSpecs.postResponseSpecification;
@@ -214,5 +218,31 @@ public class PostsTests extends TestBase {
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokPostsData sentData = gson.fromJson(jsonReader, LombokPostsData.class);
+
+        InputStream stream2 = classLoader.getResourceAsStream("testData/dataToSend/postsPatchBody.json");
+        JsonReader jsonReader2 = new JsonReader(new InputStreamReader(stream2));
+        JsonObject sentDataObject = gson.fromJson(jsonReader2, JsonObject.class);
+        Set<String> sentKeys = sentDataObject.keySet();
+
+        LombokPostsData responseData =
+                given().
+                        spec(requestSpecification).
+                        body(sentData).
+                        when().
+                        patch("/posts/" + sentData.getId()).
+                        then().
+                        spec(responseSpecification).
+                        extract().as(LombokPostsData.class);
+
+        assertEquals(responseData.getId(), sentData.getId());
+        if (sentKeys.contains("userId")) {
+            assertEquals(responseData.getUserId(), sentData.getUserId());
+        }
+        if (sentKeys.contains("title")) {
+            assertEquals(responseData.getTitle(), sentData.getTitle());
+        }
+        if (sentKeys.contains("body")) {
+            assertEquals(responseData.getBody(), sentData.getBody());
+        }
     }
 }
