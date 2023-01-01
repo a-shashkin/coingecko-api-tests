@@ -7,7 +7,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LombokPhotosData {
 
-    private Integer userId;
+    private Integer albumId;
     private Integer id;
     private String title;
     private String url;
