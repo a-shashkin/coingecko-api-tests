@@ -1,6 +1,7 @@
 package com.simbirsoft.tests;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.simbirsoft.lombok.LombokAlbumsData;
 import com.simbirsoft.lombok.LombokPhotosData;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Set;
 
 import static com.simbirsoft.specs.PostRequestSpecs.postRequestSpecification;
 import static com.simbirsoft.specs.PostRequestSpecs.postResponseSpecification;
@@ -136,7 +138,7 @@ public class AlbumsTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/albumsRequests/postAlbumRequest.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/albumsRequests/albumsPostBody.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokAlbumsData sentData = gson.fromJson(jsonReader, LombokAlbumsData.class);
@@ -163,7 +165,7 @@ public class AlbumsTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/albumsRequests/putAlbumRequest.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/albumsRequests/albumsPutBody.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokAlbumsData sentData = gson.fromJson(jsonReader, LombokAlbumsData.class);
@@ -181,5 +183,59 @@ public class AlbumsTests extends TestBase {
         assertEquals(sentData.getId(), responseData.getId());
         assertEquals(sentData.getUserId(), responseData.getUserId());
         assertEquals(sentData.getTitle(), responseData.getTitle());
+    }
+
+    @Test
+    void editAlbumViaPatchRequest() {
+
+        Gson gson = new Gson();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/albumsRequests/albumsPatchBody.json");
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
+        jsonReader.setLenient(true);
+        LombokAlbumsData sentData = gson.fromJson(jsonReader, LombokAlbumsData.class);
+
+        InputStream stream2 = classLoader.getResourceAsStream("testData/dataToSend/albumsRequests/albumsPatchBody.json");
+        JsonReader jsonReader2 = new JsonReader(new InputStreamReader(stream2));
+        JsonObject sentDataObject = gson.fromJson(jsonReader2, JsonObject.class);
+        Set<String> sentKeys = sentDataObject.keySet();
+
+        LombokAlbumsData responseData =
+                given().
+                        spec(requestSpecification).
+                        body(sentData).
+                        when().
+                        put("/albums/" + sentData.getId()).
+                        then().
+                        spec(responseSpecification).
+                        extract().as(LombokAlbumsData.class);
+
+        assertEquals(sentData.getId(), responseData.getId());
+        if (sentKeys.contains("userId")) {
+            assertEquals(responseData.getUserId(), sentData.getUserId());
+        }
+        if (sentKeys.contains("title")) {
+            assertEquals(responseData.getTitle(), sentData.getTitle());
+        }
+    }
+
+    @Test
+    void deleteAlbum() {
+
+        Gson gson = new Gson();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/albumsRequests/albumsPatchBody.json");
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
+        jsonReader.setLenient(true);
+        LombokAlbumsData sentData = gson.fromJson(jsonReader, LombokAlbumsData.class);
+
+        LombokAlbumsData responseData =
+                given().
+                        spec(requestSpecification).
+                        when().
+                        delete("/posts/" + sentData.getId()).
+                        then().
+                        spec(responseSpecification).
+                        extract().as(LombokAlbumsData.class);
     }
 }
