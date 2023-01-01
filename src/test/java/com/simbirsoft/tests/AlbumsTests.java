@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.simbirsoft.lombok.LombokAlbumsData;
 import com.simbirsoft.lombok.LombokPhotosData;
-import com.simbirsoft.lombok.LombokPostsData;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
@@ -66,7 +66,7 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
-    void getSpecificUserAlbums() {
+    void getSpecificUserAlbumsTest() {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -97,7 +97,7 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
-    void getAlbumPhotos() {
+    void getAlbumPhotosTest() {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -134,7 +134,7 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
-    void createAlbum() {
+    void createAlbumTest() {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -161,7 +161,7 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
-    void editAlbumViaPutRequest() {
+    void editAlbumViaPutRequestTest() {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -186,7 +186,7 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
-    void editAlbumViaPatchRequest() {
+    void editAlbumViaPatchRequestTest() {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -205,7 +205,7 @@ public class AlbumsTests extends TestBase {
                         spec(requestSpecification).
                         body(sentData).
                         when().
-                        put("/albums/" + sentData.getId()).
+                        patch("/albums/" + sentData.getId()).
                         then().
                         spec(responseSpecification).
                         extract().as(LombokAlbumsData.class);
@@ -220,7 +220,7 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
-    void deleteAlbum() {
+    void deleteAlbumRequestTest() {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -229,13 +229,13 @@ public class AlbumsTests extends TestBase {
         jsonReader.setLenient(true);
         LombokAlbumsData sentData = gson.fromJson(jsonReader, LombokAlbumsData.class);
 
-        LombokAlbumsData responseData =
+        Response response =
                 given().
                         spec(requestSpecification).
                         when().
                         delete("/posts/" + sentData.getId()).
                         then().
                         spec(responseSpecification).
-                        extract().as(LombokAlbumsData.class);
+                        extract().response();
     }
 }

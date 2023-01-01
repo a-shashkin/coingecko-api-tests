@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.simbirsoft.lombok.LombokCommentsData;
 import com.simbirsoft.lombok.LombokPostsData;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
@@ -64,7 +65,7 @@ public class PostsTests extends TestBase {
     }
 
     @Test
-    void getCommentsForPostViaPostsRequest() {
+    void getCommentsForPostViaPostsRequestTest() {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -101,7 +102,7 @@ public class PostsTests extends TestBase {
     }
 
     @Test
-    void getCommentsForPostViaCommentsPostIdRequest() {
+    void getCommentsForPostViaCommentsPostIdRequestTest() {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -166,7 +167,7 @@ public class PostsTests extends TestBase {
     }
 
     @Test
-    void editPostViaPutRequest() {
+    void editPostViaPutRequestTest() {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -192,7 +193,7 @@ public class PostsTests extends TestBase {
     }
 
     @Test
-    void editPostViaPatchRequest() {
+    void editPostViaPatchRequestTest() {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -229,7 +230,7 @@ public class PostsTests extends TestBase {
     }
 
     @Test
-    void deletePostRequest() {
+    void deletePostRequestTest() {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -238,13 +239,13 @@ public class PostsTests extends TestBase {
         jsonReader.setLenient(true);
         LombokPostsData sentData = gson.fromJson(jsonReader, LombokPostsData.class);
 
-        LombokPostsData responseData =
+        Response response =
                 given().
                         spec(requestSpecification).
                         when().
                         delete("/posts/" + sentData.getId()).
                         then().
                         spec(responseSpecification).
-                        extract().as(LombokPostsData.class);
+                        extract().response();
     }
 }
