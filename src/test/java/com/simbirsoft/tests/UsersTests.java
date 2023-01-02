@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Feature("Users")
 @Owner("allure8")
 @Tag("users_tests")
-public class UsersTests {
+public class UsersTests extends TestBase {
 
     @Test
     @AllureId("13959")
