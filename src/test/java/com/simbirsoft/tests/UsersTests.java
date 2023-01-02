@@ -62,7 +62,7 @@ public class UsersTests extends TestBase {
         InputStream stream = classLoader.getResourceAsStream("testData/expectedResults/usersRequests/getUserExpectedResult.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
-        LombokUsersData expectedData = gson.fromJson(jsonReader, LombokToDosData.class);
+        LombokUsersData expectedData = gson.fromJson(jsonReader, LombokUsersData.class);
 
         LombokUsersData usersGetRequestData =
                 given().
@@ -266,7 +266,7 @@ public class UsersTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/toDoRequests/todosPatchBody.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/usersRequests/usersPatchBody.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokUsersData sentData = gson.fromJson(jsonReader, LombokUsersData.class);

@@ -124,7 +124,7 @@ public class ToDosTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/todosRequests/todosPostBody.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/toDosRequests/todosPostBody.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokToDosData sentData = gson.fromJson(jsonReader, LombokToDosData.class);
@@ -155,7 +155,7 @@ public class ToDosTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/todosRequests/todosPutBody.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/toDosRequests/todosPutBody.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokToDosData sentData = gson.fromJson(jsonReader, LombokToDosData.class);
@@ -184,12 +184,12 @@ public class ToDosTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/todosRequests/todosPatchBody.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/toDosRequests/todosPatchBody.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokToDosData sentData = gson.fromJson(jsonReader, LombokToDosData.class);
 
-        InputStream stream2 = classLoader.getResourceAsStream("testData/dataToSend/todosRequests/todosPatchBody.json");
+        InputStream stream2 = classLoader.getResourceAsStream("testData/dataToSend/toDosRequests/todosPatchBody.json");
         JsonReader jsonReader2 = new JsonReader(new InputStreamReader(stream2));
         JsonObject sentDataObject = gson.fromJson(jsonReader2, JsonObject.class);
         Set<String> sentKeys = sentDataObject.keySet();
@@ -224,7 +224,7 @@ public class ToDosTests extends TestBase {
 
         Gson gson = new Gson();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/toDoRequests/todosPatchBody.json");
+        InputStream stream = classLoader.getResourceAsStream("testData/dataToSend/toDosRequests/todosPatchBody.json");
         JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
         jsonReader.setLenient(true);
         LombokToDosData sentData = gson.fromJson(jsonReader, LombokToDosData.class);
