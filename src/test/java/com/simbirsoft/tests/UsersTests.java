@@ -5,7 +5,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.simbirsoft.lombok.LombokToDosData;
 import com.simbirsoft.lombok.LombokUsersData;
+import io.qameta.allure.AllureId;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
@@ -22,9 +27,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Feature("Users")
+@Owner("allure8")
+@Tag("users_tests")
 public class UsersTests {
 
     @Test
+    @AllureId("13959")
+    @Story("Get users")
+    @Tag("get_request_tests")
     void getAllUsersTest() {
 
         LombokUsersData[] usersGetRequestsData =
@@ -41,6 +52,9 @@ public class UsersTests {
     }
 
     @Test
+    @AllureId("13960")
+    @Story("Get users")
+    @Tag("get_request_tests")
     void getSpecificUserTest() {
 
         Gson gson = new Gson();
@@ -78,6 +92,9 @@ public class UsersTests {
     }
 
     @Test
+    @AllureId("13962")
+    @Story("Add users")
+    @Tag("post_request_tests")
     void createUserRequestTest() {
 
         Gson gson = new Gson();
@@ -117,6 +134,9 @@ public class UsersTests {
     }
 
     @Test
+    @AllureId("13963")
+    @Story("Edit users")
+    @Tag("put_request_tests")
     void editUserViaPutRequestTest() {
 
         Gson gson = new Gson();
@@ -154,6 +174,9 @@ public class UsersTests {
     }
 
     @Test
+    @AllureId("13964")
+    @Story("Edit users")
+    @Tag("patch_request_tests")
     void editUserViaPatchRequestTest() {
 
         Gson gson = new Gson();
@@ -236,6 +259,9 @@ public class UsersTests {
     }
 
     @Test
+    @AllureId("13965")
+    @Story("Delete users")
+    @Tag("delete_request_tests")
     void deleteUserRequestTest() {
 
         Gson gson = new Gson();

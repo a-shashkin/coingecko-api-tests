@@ -10,6 +10,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
@@ -28,11 +29,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Feature("Albums")
 @Owner("allure8")
+@Tag("albums_tests")
 public class AlbumsTests extends TestBase {
 
     @Test
     @AllureId("13925")
     @Story("Getting albums")
+    @Tag("get_request_tests")
     void getAllAlbumsTest() {
 
         LombokAlbumsData[] albumsGetRequestsData =
@@ -51,6 +54,7 @@ public class AlbumsTests extends TestBase {
     @Test
     @AllureId("13926")
     @Story("Getting albums")
+    @Tag("get_request_tests")
     void getSpecificAlbumTest() {
 
         Gson gson = new Gson();
@@ -78,6 +82,7 @@ public class AlbumsTests extends TestBase {
     @Test
     @AllureId("13928")
     @Story("Getting albums")
+    @Tag("get_request_tests")
     void getSpecificUserAlbumsTest() {
 
         Gson gson = new Gson();
@@ -111,6 +116,7 @@ public class AlbumsTests extends TestBase {
     @Test
     @AllureId("13933")
     @Story("Getting photos from an album")
+    @Tag("get_request_tests")
     void getAlbumPhotosTest() {
 
         Gson gson = new Gson();
@@ -149,6 +155,8 @@ public class AlbumsTests extends TestBase {
 
     @Test
     @AllureId("13929")
+    @Story("Creating albums")
+    @Tag("post_request_tests")
     void createAlbumTest() {
 
         Gson gson = new Gson();
@@ -177,6 +185,8 @@ public class AlbumsTests extends TestBase {
 
     @Test
     @AllureId("13930")
+    @Story("Updating albums")
+    @Tag("put_request_tests")
     void editAlbumViaPutRequestTest() {
 
         Gson gson = new Gson();
@@ -203,6 +213,8 @@ public class AlbumsTests extends TestBase {
 
     @Test
     @AllureId("13931")
+    @Story("Updating albums")
+    @Tag("patch_request_tests")
     void editAlbumViaPatchRequestTest() {
 
         Gson gson = new Gson();
@@ -238,6 +250,8 @@ public class AlbumsTests extends TestBase {
 
     @Test
     @AllureId("13932")
+    @Story("Deleting albums")
+    @Tag("delete_request_tests")
     void deleteAlbumRequestTest() {
 
         Gson gson = new Gson();

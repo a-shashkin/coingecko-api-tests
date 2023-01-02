@@ -4,7 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.simbirsoft.lombok.LombokToDosData;
+import io.qameta.allure.AllureId;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
@@ -21,9 +26,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Feature("To-Do's")
+@Owner("allure8")
+@Tag("todos_tests")
 public class ToDosTests {
 
     @Test
+    @AllureId("13942")
+    @Story("Get To-Do's")
+    @Tag("get_request_tests")
     void getAllToDosTest() {
 
         LombokToDosData[] toDosGetRequestsData =
@@ -40,6 +51,9 @@ public class ToDosTests {
     }
 
     @Test
+    @AllureId("13943")
+    @Story("Get To-Do's")
+    @Tag("get_request_tests")
     void getSpecificToDoTest() {
 
         Gson gson = new Gson();
@@ -66,6 +80,9 @@ public class ToDosTests {
     }
 
     @Test
+    @AllureId("13961")
+    @Story("Get To-Do's")
+    @Tag("get_request_tests")
     void getSpecificUserToDosTest() {
 
         Gson gson = new Gson();
@@ -100,6 +117,9 @@ public class ToDosTests {
     }
 
     @Test
+    @AllureId("13955")
+    @Story("Make To-Do's")
+    @Tag("post_request_tests")
     void createToDoTest() {
 
         Gson gson = new Gson();
@@ -128,6 +148,9 @@ public class ToDosTests {
     }
 
     @Test
+    @AllureId("13956")
+    @Story("Update To-Do's")
+    @Tag("put_request_tests")
     void editToDoViaPutRequestTest() {
 
         Gson gson = new Gson();
@@ -154,6 +177,9 @@ public class ToDosTests {
     }
 
     @Test
+    @AllureId("13957")
+    @Story("Update To-Do's")
+    @Tag("patch_request_tests")
     void editToDoViaPatchRequestTest() {
 
         Gson gson = new Gson();
@@ -191,6 +217,9 @@ public class ToDosTests {
     }
 
     @Test
+    @AllureId("13958")
+    @Story("Delete To-Do's")
+    @Tag("delete_request_tests")
     void deleteToDoRequestTest() {
 
         Gson gson = new Gson();

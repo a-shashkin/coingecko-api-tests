@@ -5,7 +5,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.simbirsoft.lombok.LombokCommentsData;
 import com.simbirsoft.lombok.LombokPostsData;
+import io.qameta.allure.AllureId;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
@@ -20,9 +25,15 @@ import static com.simbirsoft.specs.Specs.responseSpecification;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Feature("Posts")
+@Owner("allure8")
+@Tag("posts_tests")
 public class PostsTests extends TestBase {
 
     @Test
+    @AllureId("13918")
+    @Story("Getting posts")
+    @Tag("get_request_tests")
     void getAllPostsTest() {
 
         LombokPostsData[] postsGetRequestsData =
@@ -39,6 +50,9 @@ public class PostsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13919")
+    @Story("Getting posts")
+    @Tag("get_request_tests")
     void getSpecificPostTest() {
 
         Gson gson = new Gson();
@@ -65,6 +79,9 @@ public class PostsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13920")
+    @Story("Getting comments on posts")
+    @Tag("get_request_tests")
     void getCommentsForPostViaPostsRequestTest() {
 
         Gson gson = new Gson();
@@ -102,6 +119,9 @@ public class PostsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13921")
+    @Story("Getting comments on posts")
+    @Tag("get_request_tests")
     void getCommentsForPostViaCommentsPostIdRequestTest() {
 
         Gson gson = new Gson();
@@ -139,6 +159,9 @@ public class PostsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13922")
+    @Story("Creating posts")
+    @Tag("post_request_tests")
     void createPostTest() {
 
         Gson gson = new Gson();
@@ -167,6 +190,9 @@ public class PostsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13923")
+    @Story("Updating posts")
+    @Tag("put_request_tests")
     void editPostViaPutRequestTest() {
 
         Gson gson = new Gson();
@@ -193,6 +219,9 @@ public class PostsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13924")
+    @Story("Updating posts")
+    @Tag("patch_request_tests")
     void editPostViaPatchRequestTest() {
 
         Gson gson = new Gson();
@@ -230,6 +259,9 @@ public class PostsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13927")
+    @Story("Deleting posts")
+    @Tag("delete_request_tests")
     void deletePostRequestTest() {
 
         Gson gson = new Gson();

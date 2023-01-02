@@ -54,3 +54,69 @@ tasks.withType(Test) {
         }
     }
 }
+
+task albums_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "albums_tests"
+    }
+}
+
+task photos_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "photos_tests"
+    }
+}
+
+task posts_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "posts_tests"
+    }
+}
+
+task todos_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "todos_tests"
+    }
+}
+
+task users_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "users_tests"
+    }
+}
+
+task get_request_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "get_request_tests"
+    }
+}
+
+task post_request_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "post_request_tests"
+    }
+}
+
+task put_request_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "put_request_tests"
+    }
+}
+
+task patch_request_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "patch_request_tests"
+    }
+}
+
+task delete_request_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "delete_request_tests"
+    }
+}
+
+task non_get_request_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "post_request_tests", "put_request_tests", "patch_request_tests", "delete_request_tests"
+    }
+}

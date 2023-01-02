@@ -3,9 +3,13 @@ package com.simbirsoft.tests;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-import com.simbirsoft.lombok.LombokAlbumsData;
 import com.simbirsoft.lombok.LombokPhotosData;
+import io.qameta.allure.AllureId;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
@@ -22,9 +26,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Feature("Photos")
+@Owner("allure8")
+@Tag("photos_tests")
 public class PhotosTests extends TestBase {
 
     @Test
+    @AllureId("13936")
+    @Story("Getting photos")
+    @Tag("get_request_tests")
     void getAllPhotosTest() {
 
         LombokPhotosData[] photosGetRequestsData =
@@ -41,6 +51,9 @@ public class PhotosTests extends TestBase {
     }
 
     @Test
+    @AllureId("13937")
+    @Story("Getting photos")
+    @Tag("get_request_tests")
     void getSpecificPhotoTest() {
 
         Gson gson = new Gson();
@@ -68,6 +81,9 @@ public class PhotosTests extends TestBase {
     }
 
     @Test
+    @AllureId("13938")
+    @Story("Posting photos")
+    @Tag("post_request_tests")
     void postPhotoTest() {
 
         Gson gson = new Gson();
@@ -97,6 +113,9 @@ public class PhotosTests extends TestBase {
     }
 
     @Test
+    @AllureId("13939")
+    @Story("Posting photos")
+    @Tag("put_request_tests")
     void editPhotoViaPutRequest() {
 
         Gson gson = new Gson();
@@ -124,6 +143,9 @@ public class PhotosTests extends TestBase {
     }
 
     @Test
+    @AllureId("13940")
+    @Story("Posting photos")
+    @Tag("patch_request_tests")
     void editPhotoViaPatchRequest() {
 
         Gson gson = new Gson();
@@ -164,6 +186,9 @@ public class PhotosTests extends TestBase {
     }
 
     @Test
+    @AllureId("13941")
+    @Story("Deleting photos")
+    @Tag("delete_request_tests")
     void deletePhotoRequestTest() {
 
         Gson gson = new Gson();
