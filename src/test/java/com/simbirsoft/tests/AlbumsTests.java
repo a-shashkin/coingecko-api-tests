@@ -5,6 +5,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.simbirsoft.lombok.LombokAlbumsData;
 import com.simbirsoft.lombok.LombokPhotosData;
+import io.qameta.allure.AllureId;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
@@ -22,9 +26,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Feature("Albums")
+@Owner("allure8")
 public class AlbumsTests extends TestBase {
 
     @Test
+    @AllureId("13925")
+    @Story("Getting albums")
     void getAllAlbumsTest() {
 
         LombokAlbumsData[] albumsGetRequestsData =
@@ -41,6 +49,8 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13926")
+    @Story("Getting albums")
     void getSpecificAlbumTest() {
 
         Gson gson = new Gson();
@@ -66,6 +76,8 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13928")
+    @Story("Getting albums")
     void getSpecificUserAlbumsTest() {
 
         Gson gson = new Gson();
@@ -97,6 +109,8 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13933")
+    @Story("Getting photos from an album")
     void getAlbumPhotosTest() {
 
         Gson gson = new Gson();
@@ -134,6 +148,7 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13929")
     void createAlbumTest() {
 
         Gson gson = new Gson();
@@ -161,6 +176,7 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13930")
     void editAlbumViaPutRequestTest() {
 
         Gson gson = new Gson();
@@ -186,6 +202,7 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13931")
     void editAlbumViaPatchRequestTest() {
 
         Gson gson = new Gson();
@@ -220,6 +237,7 @@ public class AlbumsTests extends TestBase {
     }
 
     @Test
+    @AllureId("13932")
     void deleteAlbumRequestTest() {
 
         Gson gson = new Gson();
