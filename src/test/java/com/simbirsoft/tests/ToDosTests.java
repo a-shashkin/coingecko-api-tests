@@ -3,8 +3,6 @@ package com.simbirsoft.tests;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-import com.simbirsoft.lombok.LombokAlbumsData;
-import com.simbirsoft.lombok.LombokPhotosData;
 import com.simbirsoft.lombok.LombokToDosData;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;

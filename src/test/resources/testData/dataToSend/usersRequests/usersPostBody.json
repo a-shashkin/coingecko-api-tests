@@ -1,0 +1,22 @@
+{
+  "name": "John Doe",
+  "username": "Johndoe",
+  "email": "johndoe@yesenia.net",
+  "address": {
+    "street": "Pennsylvania Avenue NW",
+    "suite": "1600",
+    "city": "Washington, D.C.",
+    "zipcode": "DC 20500",
+    "geo": {
+      "lat": "-38.5352",
+      "lng": "-77.0211"
+    }
+  },
+  "phone": "+1 202-456-1111",
+  "website": "whitehouse.gov",
+  "company": {
+    "name": "USA",
+    "catchPhrase": "Democracy",
+    "bs": "Democracy"
+  }
+}
