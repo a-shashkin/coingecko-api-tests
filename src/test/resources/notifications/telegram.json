@@ -1,0 +1,51 @@
+{
+  "base": {
+    "logo": "",
+    "project": "JSONPlaceholder",
+    "environment": "Production",
+    "comment": "Autotests for jsonplaceholder.typicode.com",
+    "reportLink": "",
+    "language": "en",
+    "messenger": "telegram",
+    "allureFolder": "allure-report/",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "5292517487:AAHnAmUqr3V3bZGsXOF_9AkDwW4_CGkXtf0",
+    "chat": "-1001652800417",
+    "replyTo": ""
+  },
+  "slack": {
+    "token": "",
+    "chat": "",
+    "replyTo": ""
+  },
+  "mattermost": {
+    "url": "",
+    "token": "",
+    "chat": ""
+  },
+  "skype": {
+    "appId": "",
+    "appSecret": "",
+    "serviceUrl": "",
+    "conversationId": "",
+    "botId": "",
+    "botName": ""
+  },
+  "mail": {
+    "host": "",
+    "port": "",
+    "username": "",
+    "password": "",
+    "securityProtocol": null,
+    "from": "",
+    "recipient": ""
+  },
+  "proxy": {
+    "host": "",
+    "port": 0,
+    "username": "",
+    "password": ""
+  }
+}
